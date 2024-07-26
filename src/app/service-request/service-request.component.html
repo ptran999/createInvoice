@@ -1,0 +1,133 @@
+<!--
+  Title: service-request.component.html
+  Authors: Brock Hemsouvanh, Phuong Tran
+  Date: 07/07/2024
+  Updated: 07/21/2024 by Brock Hemsouvanh
+  Description: Service Request component template for BCRS application
+-->
+<br>
+<br>
+<br>
+<div class="row justify-content-center mb-5">
+  <div class="card-size card">
+    <div class="card-body">
+      <div class=" width-container row justify-content-center">
+        <div class="row justify-content-center">
+          <div class="my-2 mb-3 row justify-content-center">
+            <br>
+            <h3 class="text-center text-color">Service Request</h3>
+          </div>
+          
+           <!-- Service request form -->
+        <form #orderForm="ngForm" (ngSubmit)="generateOrder(orderForm)">
+       
+          <div class="col mt-3">
+
+            <div class="d-flex flex-column bd-highlight mb-3">
+              <label for="customerFirstName" class="form-label fw-bold">First Name:</label>
+              <input type="text" id="firstName" name="firstName" class="form-control" [(ngModel)]="order.firstName" #firstName="ngModel" placeholder="First Name" required>
+              <div class="required" *ngIf="firstName.errors?.['required']">*Required</div>
+            </div>
+      
+            <div class="d-flex flex-column bd-highlight mb-3">
+              <label for="customerLastName" class="form-label fw-bold">Last Name:</label>
+              <input type="text" id="lastName" name="lastName" class="form-control" [(ngModel)]="order.lastName" #lastName="ngModel" placeholder="Last Name" required>
+              <div class="required" *ngIf="lastName.errors?.['required']">*Required</div>
+            </div>
+
+            <div class="d-flex flex-column bd-highlight mb-3">
+              <label for="customerEmail" class="form-label fw-bold">Email:</label>
+              <label for="email" class="email-title">Customer Email:</label>
+              <input type="text" placeholder="Email" id="email" name="email" class="form-control" [(ngModel)]="order.email" #email="ngModel" required>
+              <div class="required" *ngIf="email.errors?.['required']">*Required</div>
+              <div class="required" *ngIf="email.errors?.['email']">Invalid email format.</div>
+            </div>
+      
+            <div class="d-flex flex-column bd-highlight mb-3">
+              <label for="orderDate" class="form-label fw-bold">Date:</label>
+              <input type="date" id="orderDate" class="form-control" formControlName="orderDate" 
+                placeholder="Order Date" required />
+            </div>
+      
+            <br>
+            <table class="table table-bordered table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Service Name</th>
+                  <th>Service Price</th>
+                  <th>Select</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Loop through services and display in a table -->
+                <tr *ngFor="let product of products">
+                  <td>{{ service.name }}</td>
+                  <td>{{ product.price | currency }}</td>
+                  <td>
+                    <!-- Checkbox for selecting products -->
+                    <input type="checkbox" [value]="product.price" [(ngModel)]="product.checked" [name]="product.name"> {{ product.name }} - {{ product.price | currency:'USD' }}
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>Password Reset</td>
+                  <td>$39.99</td>
+                  <td class="align-right"><input type="checkbox" class="form-check-input"/></td>
+                </tr>
+                <tr>
+                  <td>Spyware Removal</td>
+                  <td>$99.99</td>
+                  <td class="align-right"><input type="checkbox" class="form-check-input"/></td>
+                </tr>
+                <tr>
+                  <td>RAM Upgrade</td>
+                  <td>$129.99</td>
+                  <td class="align-right"><input type="checkbox" class="form-check-input"/></td>
+                </tr>
+                <tr>
+                  <td>Software Installation</td>
+                  <td>$49.99</td>
+                  <td class="align-right"><input type="checkbox" class="form-check-input"/></td>
+                </tr>
+                <tr>
+                  <td>Keyboard Cleaning</td>
+                  <td>$45.00</td>
+                  <td class="align-right"><input type="checkbox" class="form-check-input"/></td>
+                </tr>
+                <tr>
+                  <td>Disk Clean Up</td>
+                  <td>$129.99</td>
+                  <td class="align-right"><input type="checkbox" class="form-check-input"/></td>
+                </tr>
+                <tr>
+                  <td>Software Installation</td>
+                  <td>$49.99</td>
+                  <td class="align-right"><input type="checkbox" class="form-check-input"/></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      
+          <br>
+          <br>
+              <br>
+              <div class="mb-3">
+                <label for="partsAmount" class="form-label fw-bold">Parts Amount:</label>
+                <input type="number" id="partsAmount" class="form-control" formControlName="partsAmount" placeholder="0" min="0"/>
+              </div>
+              <div class="mb-3">
+                <label for="parts-labor">Labor($50 an hour)</label><br />
+                <input type="number" class="form-control" id="labor" name="labor" [(ngModel)]="order.labor">
+              </div>
+      
+              <br>
+              <div class="row">
+              <button class="btn btn-secondary btn-color" type="submit"> <span *ngIf="!isLoading">Create Invoice</span></button>
+            </div>
+          </form>
+        </div>
+       </div>
+  </div>
+  </div>
+</div>
